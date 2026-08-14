@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CareerNJob — free courses, internships, private jobs, government jobs and scholarships for students and freshers.">
+  <title>CareerNJob — Courses, Internships & Jobs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="CareerNJob home">
+          <span class="brand-mark">C</span>
+          <span>Career<span>nJob</span></span>
+        </a>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#courses">Free Courses</a>
+          <a href="index.html#internships">Internships</a>
+          <a href="index.html#jobs">Private Jobs</a>
+          <a href="index.html#govt">Govt Jobs</a>
+          <a href="index.html#scholarships">Scholarships</a>
+        </nav>
+      </div>
+    </div>
+    <div class="search-row">
+      <div class="container">
+        <form id="searchForm" class="search">
+          <input id="searchInput" type="search" placeholder="Search courses, internships, jobs..." aria-label="Search">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main id="home" class="container layout">
+    <section class="content">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">OPPORTUNITIES FOR STUDENTS & FRESHERS</span>
+          <h1>Learn. Apply. <strong>Grow.</strong></h1>
+          <p>Discover useful free courses, internships, jobs and scholarships in one simple place.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#courses">Explore Courses</a>
+            <a class="btn ghost" href="#internships">Find Internships</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <span>NEW</span>
+          <b>Daily opportunities</b>
+          <small>Fresh listings for your career journey.</small>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">LATEST</span>
+          <h2>Latest Opportunities</h2>
+        </div>
+        <span id="resultCount" class="result-count"></span>
+      </div>
+
+      <div id="posts" class="posts"></div>
+      <button id="loadMore" class="load-more">Load more</button>
+      <div id="empty" class="empty" hidden>No matching opportunities found.</div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="ad-box">ADVERTISEMENT</div>
+
+      <div class="side-card">
+        <h3>Most Popular</h3>
+        <div id="popular"></div>
+      </div>
+
+      <div class="side-card newsletter">
+        <span class="eyebrow">FREE UPDATES</span>
+        <h3>Get new opportunities</h3>
+        <p>Join our newsletter for useful courses, internships and job alerts.</p>
+        <form id="newsletterForm">
+          <input type="email" id="email" placeholder="Your email address" required>
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+        <small id="newsletterMsg"></small>
+      </div>
+
+      <div class="ad-box tall">ADVERTISEMENT</div>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark">C</span><span>Career<span>nJob</span></span></a>
+        <p>Helping students and freshers discover learning and career opportunities.</p>
+      </div>
+      <div>
+        <h4>Categories</h4>
+        <a href="#courses">Free Courses</a>
+        <a href="#internships">Internships</a>
+        <a href="#jobs">Private Jobs</a>
+        <a href="#govt">Government Jobs</a>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+    <div class="copyright">© <span id="year"></span> CareerNJob. All rights reserved.</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
