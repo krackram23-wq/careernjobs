@@ -357,6 +357,16 @@ if (currentFilename.toLowerCase() === 'job-details.html') {
         if (el) el.style.display = 'none';
       }
       
+      const bannerWrap = document.getElementById('job-banner-wrap');
+      const jobImg = document.getElementById('job-image');
+      if (currentPost.image && jobImg && bannerWrap) {
+        jobImg.src = currentPost.image;
+        jobImg.alt = currentPost.title;
+        bannerWrap.style.display = 'block';
+      } else if (bannerWrap) {
+        bannerWrap.style.display = 'none';
+      }
+
       const topApply = document.getElementById('apply-btn-top');
       const bottomApply = document.getElementById('apply-btn-bottom');
       const applyUrl = currentPost.apply_url || '#';
