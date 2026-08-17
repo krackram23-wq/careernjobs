@@ -6,10 +6,17 @@ const countEl = document.getElementById("resultCount");
 const emptyEl = document.getElementById("empty");
 const loadMore = document.getElementById("loadMore");
 let filtered = [...posts];
-let visible = 8;
+let visible = 12;
+
+function catClass(cat){
+  if (cat === 'Jobs' || cat === 'Private Job' || cat === 'Government Job') return 'tag-job';
+  if (cat === 'Free Course') return 'tag-course';
+  if (cat === 'Internships' || cat === 'Internship') return 'tag-intern';
+  return 'tag-default';
+}
 
 function iconFor(cat){
-  return ({Internship:"↗", "Free Course":"◆", "Government Job":"★", "Private Job":"●", Scholarship:"₹"})[cat] || "S";
+  return ({Internship:"↗", Internships:"↗", "Free Course":"◆", "Government Job":"★", "Private Job":"●", Jobs:"●", Scholarship:"₹"})[cat] || "●";
 }
 
 function render(){
@@ -18,19 +25,26 @@ function render(){
   postsEl.innerHTML = list.map(p => `
     <article class="post">
       <div class="post-image">
-        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="post-thumb-img">` : iconFor(p.cat)}
+        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="post-thumb-img">` : `<div class="post-fallback-icon">${iconFor(p.cat)}</div>`}
       </div>
-      <div>
+      <div class="post-content-wrap">
         <div class="post-top-meta">
-          <span class="tag">${p.cat}</span>
+          <span class="tag ${catClass(p.cat)}">${p.cat}</span>
           ${p.company ? `<span class="tag company-tag">${p.company}</span>` : ''}
+          ${p.salary ? `<span class="meta-badge">${p.salary.includes('month') || p.salary.includes('LPA') ? p.salary.split('+')[0] : p.salary}</span>` : ''}
         </div>
         <h3><a href="${p.link || '#'}">${p.title}</a></h3>
-        <div class="post-meta">${p.date} ${p.location ? '· ' + p.location : ''}</div>
+        <div class="post-meta">
+          <span>📅 ${p.date}</span>
+          ${p.location ? `<span>· 📍 ${p.location}</span>` : ''}
+        </div>
         <p>${p.desc}</p>
+        <div class="post-card-action">
+          <a href="${p.link || '#'}" class="btn-read-more">View Details & Apply →</a>
+        </div>
       </div>
     </article>`).join("");
-  if (countEl) countEl.textContent = `${filtered.length} results`;
+  if (countEl) countEl.textContent = `${filtered.length} listings`;
   if (emptyEl) emptyEl.hidden = filtered.length !== 0;
   if (loadMore) loadMore.hidden = visible >= filtered.length || filtered.length === 0;
 }
@@ -244,10 +258,10 @@ if (currentFilename.toLowerCase().includes('job-details') || document.getElement
 
   if (currentPost) {
     // Populate DOM
-    document.title = `${currentPost.title} — CourseJoiner`;
+    document.title = `${currentPost.title} — CareerNJobs`;
     const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
     
-    setText('page-title', `${currentPost.title} — CourseJoiner`);
+    setText('page-title', `${currentPost.title} — CareerNJobs`);
     setText('job-title', currentPost.title);
     setText('job-cat', currentPost.cat);
     setText('job-date', `Posted: ${currentPost.date}`);
