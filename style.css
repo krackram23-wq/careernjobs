@@ -487,22 +487,88 @@ h2 {
   gap: 28px;
 }
 
-.ad-box {
-  height: 120px;
-  border: 2px dashed #cbd5e1;
-  background: #ffffff;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: #94a3b8;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
+/* ==========================================================================
+   Google AdSense & Responsive Ad Units
+   ========================================================================== */
+
+.ad-leaderboard-wrap {
+  margin: 20px auto 0;
+  max-width: 1200px;
+  padding: 0 20px;
 }
 
-.ad-box.tall {
-  height: 280px;
+.ad-slot {
+  position: relative;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  width: 100%;
 }
+
+.ad-slot:hover {
+  border-color: #cbd5e1;
+}
+
+.ad-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Leaderboard Banner (Top of page) */
+.ad-slot-leaderboard {
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* In-Content Native/Article Ad (Between job sections) */
+.ad-slot-incontent {
+  min-height: 120px;
+  margin: 28px 0;
+}
+
+/* Sidebar Ads */
+.ad-slot-sidebar {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sticky Sidebar Ad */
+.ad-slot-sticky {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 24px;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .ad-slot-sticky {
+    position: static;
+  }
+  .ad-leaderboard-wrap {
+    margin: 12px auto 0;
+    padding: 0 16px;
+  }
+}
+
 
 .side-card {
   background: var(--card);
