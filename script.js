@@ -143,7 +143,7 @@ const countEl = document.getElementById("resultCount");
 const emptyEl = document.getElementById("empty");
 const loadMore = document.getElementById("loadMore");
 let filtered = [...posts];
-let visible = 5;
+let visible = 8;
 
 function iconFor(cat){
   return ({Internship:"↗", "Free Course":"◆", "Government Job":"★", "Private Job":"●", Scholarship:"₹"})[cat] || "S";
@@ -154,11 +154,16 @@ function render(){
   const list = filtered.slice(0, visible);
   postsEl.innerHTML = list.map(p => `
     <article class="post">
-      <div class="post-image">${iconFor(p.cat)}</div>
+      <div class="post-image">
+        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="post-thumb-img">` : iconFor(p.cat)}
+      </div>
       <div>
-        <span class="tag">${p.cat}</span>
+        <div class="post-top-meta">
+          <span class="tag">${p.cat}</span>
+          ${p.company ? `<span class="tag company-tag">${p.company}</span>` : ''}
+        </div>
         <h3><a href="${p.link || '#'}">${p.title}</a></h3>
-        <div class="post-meta">${p.date}</div>
+        <div class="post-meta">${p.date} ${p.location ? '· ' + p.location : ''}</div>
         <p>${p.desc}</p>
       </div>
     </article>`).join("");
@@ -315,64 +320,93 @@ if (menuToggle) {
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Auto-run similar opportunities engine on details pages
-const currentPath = window.location.pathname;
-const currentFilename = currentPath.substring(currentPath.lastIndexOf('/') + 1) || 'index.html';
+// Filter opportunities by category from URL hash
+function filterByHash() {
+  const hash = window.location.hash.toLowerCase();
+  if (hash === '#courses') {
+    filtered = posts.filter(p => p.cat === 'Free Course');
+  } else if (hash === '#internships') {
+    filtered = posts.filter(p => p.cat === 'Internship');
+  } else if (hash === '#jobs') {
+    filtered = posts.filter(p => p.cat === 'Private Job');
+  } else if (hash === '#govt') {
+    filtered = posts.filter(p => p.cat === 'Government Job');
+  } else if (hash === '#scholarships') {
+    filtered = posts.filter(p => p.cat === 'Scholarship');
+  } else {
+    filtered = [...posts];
+  }
+  visible = 8;
+  render();
+}
+
+window.addEventListener('hashchange', filterByHash);
+if (window.location.hash) {
+  filterByHash();
+}
+
+// Auto-run details population & similar opportunities engine
+const cleanPath = (window.location.pathname || '').replace(/\\/g, '/');
+const currentFilename = cleanPath.substring(cleanPath.lastIndexOf('/') + 1) || 'index.html';
 
 let currentPost = null;
 
-if (currentFilename.toLowerCase() === 'job-details.html') {
+if (currentFilename.toLowerCase().includes('job-details') || document.getElementById('job-title')) {
   const urlParams = new URLSearchParams(window.location.search);
   const jobId = urlParams.get('id');
   if (jobId) {
     currentPost = posts.find(p => p.id === jobId);
-    if (currentPost) {
-      // Populate DOM
-      document.title = `${currentPost.title} — CareerNJob`;
-      const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
-      const setHTML = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-      
-      setText('page-title', `${currentPost.title} — CareerNJob`);
-      setText('job-title', currentPost.title);
-      setText('job-cat', currentPost.cat);
-      setText('job-date', `Posted: ${currentPost.date}`);
-      setText('job-location', `Location: ${currentPost.location}`);
-      setText('job-skills', currentPost.skills && currentPost.skills.length > 0 ? currentPost.skills.join(', ') : 'N/A');
-      setText('job-experience', currentPost.experience || 'N/A');
-      setText('job-education', currentPost.education || 'N/A');
-      setText('job-location-meta', currentPost.location || 'N/A');
-      setText('job-desc', currentPost.job_description || currentPost.desc);
-      
-      if (currentPost.responsibilities) {
-        setText('job-responsibilities', currentPost.responsibilities);
-      } else {
-        const el = document.getElementById('section-roles');
-        if (el) el.style.display = 'none';
-      }
-      
-      if (currentPost.eligibility) {
-        setText('job-eligibility', currentPost.eligibility);
-      } else {
-        const el = document.getElementById('section-eligibility');
-        if (el) el.style.display = 'none';
-      }
-      
-      const bannerWrap = document.getElementById('job-banner-wrap');
-      const jobImg = document.getElementById('job-image');
-      if (currentPost.image && jobImg && bannerWrap) {
-        jobImg.src = currentPost.image;
-        jobImg.alt = currentPost.title;
-        bannerWrap.style.display = 'block';
-      } else if (bannerWrap) {
-        bannerWrap.style.display = 'none';
-      }
+  }
+  // Fallback to top job if no ID provided
+  if (!currentPost && posts.length > 0) {
+    currentPost = posts[0];
+  }
 
-      const topApply = document.getElementById('apply-btn-top');
-      const bottomApply = document.getElementById('apply-btn-bottom');
-      const applyUrl = currentPost.apply_url || '#';
-      if (topApply) topApply.href = applyUrl;
-      if (bottomApply) bottomApply.href = applyUrl;
+  if (currentPost) {
+    // Populate DOM
+    document.title = `${currentPost.title} — CareerNJob`;
+    const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    
+    setText('page-title', `${currentPost.title} — CareerNJob`);
+    setText('job-title', currentPost.title);
+    setText('job-cat', currentPost.cat);
+    setText('job-date', `Posted: ${currentPost.date}`);
+    setText('job-location', `Location: ${currentPost.location}`);
+    setText('job-skills', currentPost.skills && currentPost.skills.length > 0 ? currentPost.skills.join(', ') : 'N/A');
+    setText('job-experience', currentPost.experience || 'N/A');
+    setText('job-education', currentPost.education || 'N/A');
+    setText('job-location-meta', currentPost.location || 'N/A');
+    setText('job-desc', currentPost.job_description || currentPost.desc);
+    
+    if (currentPost.responsibilities) {
+      setText('job-responsibilities', currentPost.responsibilities);
+    } else {
+      const el = document.getElementById('section-roles');
+      if (el) el.style.display = 'none';
     }
+    
+    if (currentPost.eligibility) {
+      setText('job-eligibility', currentPost.eligibility);
+    } else {
+      const el = document.getElementById('section-eligibility');
+      if (el) el.style.display = 'none';
+    }
+    
+    const bannerWrap = document.getElementById('job-banner-wrap');
+    const jobImg = document.getElementById('job-image');
+    if (currentPost.image && jobImg && bannerWrap) {
+      jobImg.src = currentPost.image;
+      jobImg.alt = currentPost.title;
+      bannerWrap.style.display = 'block';
+    } else if (bannerWrap) {
+      bannerWrap.style.display = 'none';
+    }
+
+    const topApply = document.getElementById('apply-btn-top');
+    const bottomApply = document.getElementById('apply-btn-bottom');
+    const applyUrl = currentPost.apply_url || '#';
+    if (topApply) topApply.href = applyUrl;
+    if (bottomApply) bottomApply.href = applyUrl;
   }
 } else {
   currentPost = posts.find(p => p.link && p.link.toLowerCase() === currentFilename.toLowerCase());
@@ -382,5 +416,5 @@ if (currentPost) {
   renderSimilarOpportunities(currentPost);
 }
 
-renderPopular();
 render();
+
