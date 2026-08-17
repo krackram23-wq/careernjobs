@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="CareerNJobs — Discover verified Jobs, Free Certification Courses, and Paid Internships for students, freshers, and professionals.">
-  <title>CareerNJobs — Free Courses, Internships & Jobs Portal</title>
+  <meta name="description" content="Latest Verified Job Openings for Freshers and Experienced Graduates across IT, Finance, Operations, and Analytics.">
+  <title>Jobs & Recruitment 2026 — CareerNJobs</title>
   <link rel="stylesheet" href="style.css?v=11">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5025710421115269"
      crossorigin="anonymous"></script>
@@ -20,8 +20,8 @@
         </a>
         <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
         <nav class="nav" aria-label="Main navigation">
-          <a href="index.html" class="nav-link active">HOME</a>
-          <a href="jobs.html" class="nav-link">JOBS</a>
+          <a href="index.html" class="nav-link">HOME</a>
+          <a href="jobs.html" class="nav-link active">JOBS</a>
           <a href="courses.html" class="nav-link">FREE COURSE</a>
           <a href="internships.html" class="nav-link">INTERNSHIPS</a>
         </nav>
@@ -32,17 +32,15 @@
   <!-- Search & Category Filters Bar -->
   <div class="search-section-wrap">
     <div class="container search-inner">
-      <form id="searchForm" class="search-form" action="index.html" method="get">
-        <input id="searchInput" type="search" placeholder="Search Jobs, Free Courses, Internships, Companies..." aria-label="Search">
-        <button type="submit">Search</button>
+      <form id="searchForm" class="search-form">
+        <input id="searchInput" type="search" placeholder="Search job roles, companies, skills, locations..." aria-label="Search Jobs">
+        <button type="submit">Search Jobs</button>
       </form>
       <div class="filter-chips">
-        <button class="filter-chip active" data-filter="all">All Opportunities</button>
-        <button class="filter-chip" data-filter="jobs">💼 Jobs</button>
-        <button class="filter-chip" data-filter="courses">🎓 Free Courses</button>
-        <button class="filter-chip" data-filter="internships">🚀 Internships</button>
-        <button class="filter-chip" data-filter="ai">🤖 AI & Tech</button>
-        <button class="filter-chip" data-filter="finance">💳 Finance & Ops</button>
+        <button class="filter-chip active" data-filter="all">All Jobs</button>
+        <button class="filter-chip" data-filter="finance">Finance & Accounts</button>
+        <button class="filter-chip" data-filter="operations">Operations & Risk</button>
+        <button class="filter-chip" data-filter="freshers">Freshers & 0-2 Yrs</button>
       </div>
     </div>
   </div>
@@ -63,77 +61,39 @@
     </div>
   </div>
 
-  <!-- Main Homepage Content Layout -->
+  <!-- Main Content Layout -->
   <main class="container layout">
     <div class="content">
       
-      <!-- Featured Highlight Banner -->
-      <section class="featured-hero" id="featured-hero">
-        <div class="featured-thumb-wrap">
-          <img id="featured-img" src="images/accenture-hiring.jpg" alt="Featured Opportunity">
+      <!-- Page Header Banner -->
+      <div class="page-header-banner">
+        <div class="breadcrumbs">
+          <a href="index.html">Home</a> <span>›</span> Jobs
         </div>
-        <div class="featured-content">
-          <span class="featured-badge">🔥 Top Featured Opening</span>
-          <h2 id="featured-title"><a href="job-details.html?id=JOB-ACC-01">Accenture Hiring 2026: Procure to Pay Operations Associate</a></h2>
-          <div class="post-card-meta">
-            <span>🏢 Accenture</span>
-            <span>📍 Hyderabad</span>
-            <span>🎓 BCom / MCom / MBA</span>
-          </div>
-          <p id="featured-desc">Accenture is hiring Procure to Pay Operations Associate in Hyderabad. Experience: 0-2 years (1-3 years). Job No. AIOC-S01645614.</p>
-          <div>
-            <a href="job-details.html?id=JOB-ACC-01" class="btn-card-apply">Apply Online →</a>
-          </div>
-        </div>
-      </section>
+        <h1>💼 Latest Verified Jobs & Recruitment</h1>
+        <p>Explore full-time and fresher job openings across top corporate companies with direct official application links.</p>
+      </div>
 
-      <!-- Dynamic Search / Filter Feed Container (shown when searching or filtering) -->
-      <section id="filtered-feed-section" class="content-section" style="display: none;">
+      <!-- Jobs Feed Section -->
+      <section class="content-section">
         <div class="section-head">
-          <h2 id="filtered-feed-title">Search Results</h2>
-          <span id="filtered-count" class="result-count"></span>
+          <h2 id="page-feed-title">Available Job Openings</h2>
+          <span id="page-result-count" class="result-count"></span>
         </div>
-        <div id="filtered-posts" class="posts-grid"></div>
-        <div id="filtered-empty" class="empty-state" hidden>No matching opportunities found. Try a different search term.</div>
-      </section>
-
-      <!-- Section 1: Latest Jobs -->
-      <section class="content-section" id="section-latest-jobs">
-        <div class="section-head">
-          <h2>💼 Latest Jobs & Openings</h2>
-          <a href="jobs.html" class="section-link">View All Jobs →</a>
-        </div>
-        <div id="home-jobs-grid" class="posts-grid"></div>
-      </section>
-
-      <!-- Section 2: Free Certification Courses -->
-      <section class="content-section" id="section-free-courses">
-        <div class="section-head">
-          <h2>🎓 Free Certification Courses</h2>
-          <a href="courses.html" class="section-link">View All Courses →</a>
-        </div>
-        <div id="home-courses-grid" class="posts-grid"></div>
-      </section>
-
-      <!-- Section 3: Paid Internships -->
-      <section class="content-section" id="section-internships">
-        <div class="section-head">
-          <h2>🚀 Internships for Students & Freshers</h2>
-          <a href="internships.html" class="section-link">View All Internships →</a>
-        </div>
-        <div id="home-internships-grid" class="posts-grid"></div>
+        <div id="page-items-grid" class="posts-grid"></div>
+        <div id="page-empty" class="empty-state" hidden>No matching job openings found.</div>
       </section>
 
     </div>
 
-    <!-- Sidebar Area (CourseJoiner Style) -->
+    <!-- Sidebar Area -->
     <aside class="sidebar">
       
-      <!-- Social Join Community Alert -->
+      <!-- Social Join Alert -->
       <div class="side-card social-join-card">
         <span class="eyebrow">JOIN COMMUNITY</span>
         <h3>Get Instant Job Alerts</h3>
-        <p>Never miss a verified job opening or free certificate course alert. Join our channels:</p>
+        <p>Get instant notifications directly on your mobile device for new job openings:</p>
         <div class="social-btn-group">
           <a href="https://telegram.org" target="_blank" rel="noopener" class="btn-channel telegram-btn">
             ✈ Join Telegram Channel
@@ -158,23 +118,11 @@
         </script>
       </div>
 
-      <!-- Trending / Popular Opportunities -->
+      <!-- Trending Opportunities -->
       <div class="side-card">
         <span class="eyebrow">TRENDING NOW</span>
-        <h3>Popular Opportunities</h3>
+        <h3>Popular Openings</h3>
         <div id="sidebar-trending" class="trending-list"></div>
-      </div>
-
-      <!-- Newsletter Box -->
-      <div class="side-card newsletter">
-        <span class="eyebrow">FREE UPDATES</span>
-        <h3>Career Alerts</h3>
-        <p>Subscribe for weekly curated job openings and learning resources.</p>
-        <form id="newsletterForm">
-          <input type="email" id="email" placeholder="Your email address" required>
-          <button type="submit">Subscribe</button>
-        </form>
-        <small id="newsletterMsg"></small>
       </div>
 
       <!-- Sticky Sidebar Ad -->

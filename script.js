@@ -1,315 +1,450 @@
-let posts = (typeof sqlJobs !== 'undefined') ? [...sqlJobs] : [];
+// CareerNJobs Portal Main Script
+const allPosts = (typeof sqlJobs !== 'undefined') ? [...sqlJobs] : [];
 
-const postsEl = document.getElementById("posts");
-const popularEl = document.getElementById("popular");
-const countEl = document.getElementById("resultCount");
-const emptyEl = document.getElementById("empty");
-const loadMore = document.getElementById("loadMore");
-let filtered = [...posts];
-let visible = 12;
-
-function catClass(cat){
-  if (cat === 'Jobs' || cat === 'Private Job' || cat === 'Government Job') return 'tag-job';
-  if (cat === 'Free Course') return 'tag-course';
-  if (cat === 'Internships' || cat === 'Internship') return 'tag-intern';
-  return 'tag-default';
+// Helper functions
+function catTagClass(cat) {
+  if (!cat) return 'tag-job';
+  const c = cat.toLowerCase();
+  if (c.includes('job')) return 'tag-job';
+  if (c.includes('course')) return 'tag-course';
+  if (c.includes('intern')) return 'tag-intern';
+  return 'tag-job';
 }
 
-function iconFor(cat){
-  return ({Internship:"↗", Internships:"↗", "Free Course":"◆", "Government Job":"★", "Private Job":"●", Jobs:"●", Scholarship:"₹"})[cat] || "●";
+function iconFor(cat) {
+  if (!cat) return '💼';
+  const c = cat.toLowerCase();
+  if (c.includes('job')) return '💼';
+  if (c.includes('course')) return '🎓';
+  if (c.includes('intern')) return '🚀';
+  return '📌';
 }
 
-function render(){
-  if (!postsEl) return;
-  const list = filtered.slice(0, visible);
-  postsEl.innerHTML = list.map(p => `
-    <article class="post">
-      <div class="post-image">
-        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="post-thumb-img">` : `<div class="post-fallback-icon">${iconFor(p.cat)}</div>`}
+function createCardHTML(p) {
+  const badgeText = p.salary ? (p.salary.includes('month') || p.salary.includes('LPA') ? p.salary.split('+')[0] : p.salary) : '';
+  return `
+    <article class="post-card">
+      <div class="post-card-thumb">
+        ${p.image ? `<img src="${p.image}" alt="${p.title}" loading="lazy">` : `<div style="font-size:32px;">${iconFor(p.cat)}</div>`}
       </div>
-      <div class="post-content-wrap">
-        <div class="post-top-meta">
-          <span class="tag ${catClass(p.cat)}">${p.cat}</span>
+      <div class="post-card-body">
+        <div class="post-card-tags">
+          <span class="tag ${catTagClass(p.cat)}">${p.cat}</span>
           ${p.company ? `<span class="tag company-tag">${p.company}</span>` : ''}
-          ${p.salary ? `<span class="meta-badge">${p.salary.includes('month') || p.salary.includes('LPA') ? p.salary.split('+')[0] : p.salary}</span>` : ''}
+          ${badgeText ? `<span class="meta-badge">${badgeText}</span>` : ''}
         </div>
-        <h3><a href="${p.link || '#'}">${p.title}</a></h3>
-        <div class="post-meta">
-          <span>📅 ${p.date}</span>
+        <h3><a href="${p.link || `job-details.html?id=${p.id}`}">${p.title}</a></h3>
+        <div class="post-card-meta">
+          <span>📅 ${p.date || 'Recent'}</span>
           ${p.location ? `<span>· 📍 ${p.location}</span>` : ''}
+          ${p.experience ? `<span>· ⏳ ${p.experience}</span>` : ''}
         </div>
-        <p>${p.desc}</p>
-        <div class="post-card-action">
-          <a href="${p.link || '#'}" class="btn-read-more">View Details & Apply →</a>
+        <p>${p.desc || ''}</p>
+        <div>
+          <a href="${p.link || `job-details.html?id=${p.id}`}" class="btn-card-action">View Details & Apply →</a>
         </div>
       </div>
-    </article>`).join("");
-  if (countEl) countEl.textContent = `${filtered.length} listings`;
-  if (emptyEl) emptyEl.hidden = filtered.length !== 0;
-  if (loadMore) loadMore.hidden = visible >= filtered.length || filtered.length === 0;
+    </article>
+  `;
 }
 
-function renderPopular(){
-  if (!popularEl) return;
-  popularEl.innerHTML = posts.slice(0,5).map(p => `
-    <div class="popular-item">
-      <a href="${p.link || '#'}">${p.title}</a>
-      <small>${p.date} · ${p.cat}</small>
-    </div>`).join("");
+// Render Sidebar Trending
+function renderSidebarTrending() {
+  const trendingEl = document.getElementById('sidebar-trending');
+  if (!trendingEl || allPosts.length === 0) return;
+  trendingEl.innerHTML = allPosts.slice(0, 4).map(p => `
+    <div class="trending-item">
+      <h4><a href="${p.link || `job-details.html?id=${p.id}`}">${p.title}</a></h4>
+      <div class="trending-meta">${p.date || 'Recent'} · <span style="color:var(--primary);">${p.cat}</span></div>
+    </div>
+  `).join('');
 }
 
-function renderSimilarOpportunities(currentPost) {
-  // Scoring algorithm
-  const recommendations = posts
-    .filter(p => p.link.toLowerCase() !== currentPost.link.toLowerCase()) // exclude current post
-    .map(p => {
-      let score = 0;
-      
-      // Category match (highest priority)
-      if (p.cat === currentPost.cat) {
-        score += 15;
-      }
-      
-      // Role match
-      if (p.role && currentPost.role && p.role.toLowerCase() === currentPost.role.toLowerCase()) {
-        score += 8;
-      }
-      
-      // Skills match
-      if (p.skills && currentPost.skills) {
-        const matchingSkills = p.skills.filter(s => currentPost.skills.includes(s));
-        score += matchingSkills.length * 4;
-      }
-      
-      // Location match
-      if (p.location && currentPost.location && p.location.toLowerCase() === currentPost.location.toLowerCase()) {
-        score += 6;
-      }
-      
-      // Tags match
-      if (p.tags && currentPost.tags) {
-        const matchingTags = p.tags.filter(t => currentPost.tags.includes(t));
-        score += matchingTags.length * 3;
-      }
-      
-      // Title keyword overlap
-      const currentTitleWords = currentPost.title.toLowerCase().split(/\W+/);
-      currentTitleWords.forEach(word => {
-        if (word.length > 3 && p.title.toLowerCase().includes(word)) {
-          score += 2;
-        }
-      });
-      
-      return { post: p, score: score };
-    });
+// -------------------------------------------------------------
+// HOMEPAGE MULTI-SECTION LOGIC
+// -------------------------------------------------------------
+function initHomepage() {
+  const homeJobsGrid = document.getElementById('home-jobs-grid');
+  const homeCoursesGrid = document.getElementById('home-courses-grid');
+  const homeInternshipsGrid = document.getElementById('home-internships-grid');
   
-  // Sort descending by score
-  recommendations.sort((a, b) => b.score - a.score);
-  
-  // Select top 6 opportunities
-  const topRecommendations = recommendations.slice(0, 6).map(item => item.post);
-  
-  if (topRecommendations.length === 0) return;
-  
-  // Dynamic Heading based on category
-  let headingText = "Similar Opportunities You May Like";
-  if (currentPost.cat === "Private Job" || currentPost.cat === "Government Job") {
-    headingText = "Similar Jobs You May Like";
-  } else if (currentPost.cat === "Internship") {
-    headingText = "Related Internships You May Like";
-  } else if (currentPost.cat === "Free Course") {
-    headingText = "Related Courses For You";
-  } else if (currentPost.cat === "Scholarship") {
-    headingText = "Similar Scholarships For You";
+  if (homeJobsGrid) {
+    const jobs = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes('job'));
+    homeJobsGrid.innerHTML = jobs.map(createCardHTML).join('');
   }
   
-  // Find or create container below content
-  let similarContainer = document.getElementById("similar-opportunities");
-  if (!similarContainer) {
-    const contentEl = document.querySelector(".content");
-    if (contentEl) {
-      similarContainer = document.createElement("div");
-      similarContainer.id = "similar-opportunities";
-      contentEl.appendChild(similarContainer);
+  if (homeCoursesGrid) {
+    const courses = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes('course'));
+    homeCoursesGrid.innerHTML = courses.map(createCardHTML).join('');
+  }
+  
+  if (homeInternshipsGrid) {
+    const internships = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes('intern'));
+    homeInternshipsGrid.innerHTML = internships.map(createCardHTML).join('');
+  }
+
+  // Filter Chips on Homepage
+  const chips = document.querySelectorAll('.filter-chip');
+  const filteredSection = document.getElementById('filtered-feed-section');
+  const filteredTitle = document.getElementById('filtered-feed-title');
+  const filteredGrid = document.getElementById('filtered-posts');
+  const filteredCount = document.getElementById('filtered-count');
+  const filteredEmpty = document.getElementById('filtered-empty');
+  
+  const secJobs = document.getElementById('section-latest-jobs');
+  const secCourses = document.getElementById('section-free-courses');
+  const secInternships = document.getElementById('section-internships');
+  const featuredHero = document.getElementById('featured-hero');
+
+  function applyHomeFilter(filterType) {
+    if (filterType === 'all') {
+      if (filteredSection) filteredSection.style.display = 'none';
+      if (secJobs) secJobs.style.display = 'flex';
+      if (secCourses) secCourses.style.display = 'flex';
+      if (secInternships) secInternships.style.display = 'flex';
+      if (featuredHero) featuredHero.style.display = 'grid';
+      return;
+    }
+
+    if (secJobs) secJobs.style.display = 'none';
+    if (secCourses) secCourses.style.display = 'none';
+    if (secInternships) secInternships.style.display = 'none';
+    if (featuredHero) featuredHero.style.display = 'none';
+    if (filteredSection) filteredSection.style.display = 'flex';
+
+    let results = [];
+    if (filterType === 'jobs') {
+      results = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes('job'));
+      if (filteredTitle) filteredTitle.textContent = '💼 Latest Verified Jobs';
+    } else if (filterType === 'courses') {
+      results = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes('course'));
+      if (filteredTitle) filteredTitle.textContent = '🎓 Free Certification Courses';
+    } else if (filterType === 'internships') {
+      results = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes('intern'));
+      if (filteredTitle) filteredTitle.textContent = '🚀 Paid & Remote Internships';
+    } else if (filterType === 'ai') {
+      results = allPosts.filter(p => `${p.title} ${p.desc} ${(p.skills || []).join(' ')}`.toLowerCase().includes('ai') || `${p.title} ${p.desc}`.toLowerCase().includes('tech'));
+      if (filteredTitle) filteredTitle.textContent = '🤖 AI & Technology Opportunities';
+    } else if (filterType === 'finance') {
+      results = allPosts.filter(p => `${p.title} ${p.desc} ${(p.skills || []).join(' ')}`.toLowerCase().includes('finance') || `${p.title} ${p.desc}`.toLowerCase().includes('pay') || `${p.title} ${p.desc}`.toLowerCase().includes('operations'));
+      if (filteredTitle) filteredTitle.textContent = '💳 Finance & Operations Openings';
+    }
+
+    if (filteredGrid) filteredGrid.innerHTML = results.map(createCardHTML).join('');
+    if (filteredCount) filteredCount.textContent = `${results.length} listings`;
+    if (filteredEmpty) filteredEmpty.hidden = results.length > 0;
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      applyHomeFilter(chip.dataset.filter);
+    });
+  });
+
+  // Homepage Search Form
+  const searchForm = document.getElementById('searchForm');
+  if (searchForm) {
+    searchForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      if (!q) {
+        applyHomeFilter('all');
+        return;
+      }
+      if (secJobs) secJobs.style.display = 'none';
+      if (secCourses) secCourses.style.display = 'none';
+      if (secInternships) secInternships.style.display = 'none';
+      if (featuredHero) featuredHero.style.display = 'none';
+      if (filteredSection) filteredSection.style.display = 'flex';
+
+      const results = allPosts.filter(p => 
+        `${p.title} ${p.desc} ${p.cat} ${p.company || ''} ${(p.skills || []).join(' ')} ${p.location || ''}`.toLowerCase().includes(q)
+      );
+
+      if (filteredTitle) filteredTitle.textContent = `Search Results for "${q}"`;
+      if (filteredGrid) filteredGrid.innerHTML = results.map(createCardHTML).join('');
+      if (filteredCount) filteredCount.textContent = `${results.length} results`;
+      if (filteredEmpty) filteredEmpty.hidden = results.length > 0;
+    });
+  }
+}
+
+// -------------------------------------------------------------
+// DEDICATED LISTING PAGES LOGIC (jobs.html, courses.html, internships.html)
+// -------------------------------------------------------------
+function initDedicatedPage(pageCategory) {
+  const pageGrid = document.getElementById('page-items-grid');
+  const countEl = document.getElementById('page-result-count');
+  const emptyEl = document.getElementById('page-empty');
+  const searchForm = document.getElementById('searchForm');
+  const chips = document.querySelectorAll('.filter-chip');
+
+  if (!pageGrid) return;
+
+  let baseList = allPosts.filter(p => p.cat && p.cat.toLowerCase().includes(pageCategory));
+  let currentFiltered = [...baseList];
+
+  function renderList() {
+    pageGrid.innerHTML = currentFiltered.map(createCardHTML).join('');
+    if (countEl) countEl.textContent = `${currentFiltered.length} listings`;
+    if (emptyEl) emptyEl.hidden = currentFiltered.length > 0;
+  }
+
+  renderList();
+
+  if (searchForm) {
+    searchForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      if (!q) {
+        currentFiltered = [...baseList];
+      } else {
+        currentFiltered = baseList.filter(p => 
+          `${p.title} ${p.desc} ${p.company || ''} ${(p.skills || []).join(' ')} ${p.location || ''}`.toLowerCase().includes(q)
+        );
+      }
+      renderList();
+    });
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const f = chip.dataset.filter;
+      if (f === 'all') {
+        currentFiltered = [...baseList];
+      } else {
+        currentFiltered = baseList.filter(p => 
+          `${p.title} ${p.desc} ${(p.tags || []).join(' ')} ${(p.skills || []).join(' ')}`.toLowerCase().includes(f)
+        );
+      }
+      renderList();
+    });
+  });
+}
+
+// -------------------------------------------------------------
+// INDIVIDUAL DETAILS PAGE & RELATED CONTENT ENGINE (job-details.html)
+// -------------------------------------------------------------
+function initJobDetailsPage() {
+  const jobTitleEl = document.getElementById('job-title');
+  if (!jobTitleEl) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const jobId = urlParams.get('id');
+  let post = null;
+
+  if (jobId) {
+    post = allPosts.find(p => p.id === jobId);
+  }
+  if (!post && allPosts.length > 0) {
+    post = allPosts[0]; // fallback
+  }
+  if (!post) return;
+
+  // Set Page Title & Meta
+  document.title = `${post.title} — CareerNJobs`;
+  const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  setEl('breadcrumb-title', post.role || post.title);
+  setEl('breadcrumb-cat', post.cat || 'Opportunities');
+  
+  const catLink = document.getElementById('breadcrumb-cat-link');
+  if (catLink && post.cat) {
+    const c = post.cat.toLowerCase();
+    if (c.includes('job')) catLink.href = 'jobs.html';
+    else if (c.includes('course')) catLink.href = 'courses.html';
+    else if (c.includes('intern')) catLink.href = 'internships.html';
+  }
+
+  setEl('job-title', post.title);
+  setEl('job-cat', post.cat);
+  
+  const jobCatBadge = document.getElementById('job-cat');
+  if (jobCatBadge) jobCatBadge.className = `tag ${catTagClass(post.cat)}`;
+
+  const companyTag = document.getElementById('job-company-tag');
+  if (companyTag) {
+    if (post.company) { companyTag.textContent = post.company; companyTag.style.display = 'inline-block'; }
+    else { companyTag.style.display = 'none'; }
+  }
+
+  const salaryTag = document.getElementById('job-salary-tag');
+  if (salaryTag) {
+    if (post.salary) { salaryTag.textContent = post.salary; salaryTag.style.display = 'inline-block'; }
+    else { salaryTag.style.display = 'none'; }
+  }
+
+  setEl('job-date', `📅 Posted: ${post.date || 'Recent'}`);
+  setEl('job-location', `📍 Location: ${post.location || 'India'}`);
+  setEl('job-type-badge', `💼 Type: ${post.job_type || 'Full Time'}`);
+
+  setEl('job-company', post.company || 'Direct Recruitment');
+  setEl('job-role', post.role || 'Associate / Specialist');
+  setEl('job-education', post.education || 'Graduate / Diploma / Any Degree');
+  setEl('job-experience', post.experience || 'Freshers / 0-2 Years');
+  setEl('job-location-meta', post.location || 'Online / Remote / On-site');
+  setEl('job-salary', post.salary || 'Best in Industry');
+
+  setEl('job-desc', post.job_description || post.desc || '');
+
+  // Skills Pills
+  const skillsWrap = document.getElementById('job-skills-pills');
+  if (skillsWrap) {
+    if (post.skills && post.skills.length > 0) {
+      skillsWrap.innerHTML = post.skills.map(s => `<span class="skill-pill">${s}</span>`).join('');
+    } else {
+      skillsWrap.innerHTML = `<span class="skill-pill">Communication</span><span class="skill-pill">Problem Solving</span>`;
     }
   }
-  
-  if (!similarContainer) return;
-  
-  similarContainer.innerHTML = `
+
+  // Responsibilities
+  const rolesEl = document.getElementById('section-roles');
+  if (rolesEl) {
+    if (post.responsibilities) {
+      setEl('job-responsibilities', post.responsibilities);
+      rolesEl.style.display = 'block';
+    } else {
+      rolesEl.style.display = 'none';
+    }
+  }
+
+  // Eligibility
+  const eligEl = document.getElementById('section-eligibility');
+  if (eligEl) {
+    if (post.eligibility) {
+      setEl('job-eligibility', post.eligibility);
+      eligEl.style.display = 'block';
+    } else {
+      eligEl.style.display = 'none';
+    }
+  }
+
+  // Banner Image
+  const bannerWrap = document.getElementById('job-banner-wrap');
+  const jobImg = document.getElementById('job-image');
+  if (post.image && jobImg && bannerWrap) {
+    jobImg.src = post.image;
+    jobImg.alt = post.title;
+    bannerWrap.style.display = 'block';
+  } else if (bannerWrap) {
+    bannerWrap.style.display = 'none';
+  }
+
+  // Apply Now Buttons
+  const applyUrl = post.apply_url || '#';
+  const topApply = document.getElementById('apply-btn-top');
+  const bottomApply = document.getElementById('apply-btn-bottom');
+  if (topApply) topApply.href = applyUrl;
+  if (bottomApply) bottomApply.href = applyUrl;
+
+  // Render Related Content
+  renderRelatedOpportunities(post);
+}
+
+// Related / Similar Opportunities Engine
+function renderRelatedOpportunities(currentPost) {
+  const container = document.getElementById('similar-opportunities');
+  if (!container) return;
+
+  const related = allPosts
+    .filter(p => p.id !== currentPost.id)
+    .map(p => {
+      let score = 0;
+      if (p.cat === currentPost.cat) score += 15;
+      if (p.company && currentPost.company && p.company === currentPost.company) score += 10;
+      if (p.skills && currentPost.skills) {
+        const matches = p.skills.filter(s => currentPost.skills.includes(s));
+        score += matches.length * 4;
+      }
+      return { post: p, score: score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4)
+    .map(item => item.post);
+
+  if (related.length === 0) return;
+
+  let headingText = 'Similar Opportunities You May Like';
+  if (currentPost.cat && currentPost.cat.toLowerCase().includes('job')) headingText = 'Similar Job Openings';
+  else if (currentPost.cat && currentPost.cat.toLowerCase().includes('course')) headingText = 'Related Free Courses';
+  else if (currentPost.cat && currentPost.cat.toLowerCase().includes('intern')) headingText = 'Related Internships';
+
+  container.innerHTML = `
     <section class="similar-section">
       <hr class="similar-divider">
       <h2>${headingText}</h2>
       <div class="similar-grid">
-        ${topRecommendations.map(p => `
+        ${related.map(p => `
           <article class="similar-card">
             <div class="similar-card-header">
-              <span class="tag small-tag">${p.cat}</span>
-              <span class="similar-date">${p.date}</span>
+              <span class="tag ${catTagClass(p.cat)}">${p.cat}</span>
+              <span class="similar-date">${p.date || 'Recent'}</span>
             </div>
-            <h3><a href="${p.link}">${p.title}</a></h3>
-            <p>${p.desc}</p>
+            <h3><a href="${p.link || `job-details.html?id=${p.id}`}">${p.title}</a></h3>
+            <p>${p.desc || ''}</p>
             <div class="similar-tags">
-              ${(p.skills || []).slice(0, 2).map(s => `<span class="skill-pill">${s}</span>`).join("")}
-              ${(p.tags || []).slice(0, 2).map(t => `<span class="meta-pill">${t}</span>`).join("")}
+              ${(p.skills || []).slice(0, 2).map(s => `<span class="skill-pill">${s}</span>`).join('')}
+              ${p.location ? `<span class="meta-pill">${p.location}</span>` : ''}
             </div>
-            <div class="similar-card-footer">
-              <a href="${p.link}" class="btn-view-details">View Details</a>
+            <div style="margin-top:auto;">
+              <a href="${p.link || `job-details.html?id=${p.id}`}" class="btn-view-details">View Details →</a>
             </div>
           </article>
-        `).join("")}
+        `).join('')}
       </div>
     </section>
   `;
 }
 
-const searchForm = document.getElementById("searchForm");
-if (searchForm) {
-  searchForm.addEventListener("submit", e=>{
-    e.preventDefault();
-    const q = document.getElementById("searchInput").value.trim().toLowerCase();
-    filtered = posts.filter(p => !q || `${p.cat} ${p.title} ${p.desc}`.toLowerCase().includes(q));
-    visible = 5; render();
-  });
-}
-if (loadMore) {
-  loadMore.addEventListener("click",()=>{visible += 5; render();});
-}
-const newsletterForm = document.getElementById("newsletterForm");
-if (newsletterForm) {
-  newsletterForm.addEventListener("submit", e=>{
-    e.preventDefault();
-    const msgEl = document.getElementById("newsletterMsg");
-    if (msgEl) msgEl.textContent = "Thanks! You're on the list.";
-    e.target.reset();
-  });
-}
-const menuToggle = document.querySelector(".menu-toggle");
-if (menuToggle) {
-  menuToggle.addEventListener("click", e=>{
-    const nav = document.querySelector(".nav");
-    if (nav) {
-      nav.classList.toggle("open");
-      e.currentTarget.setAttribute("aria-expanded", nav.classList.contains("open"));
-    }
-  });
-}
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+// -------------------------------------------------------------
+// GLOBAL INITIALIZATION
+// -------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+  // Mobile Menu Toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  if (menuToggle) {
+    menuToggle.addEventListener('click', e => {
+      const nav = document.querySelector('.nav');
+      if (nav) {
+        nav.classList.toggle('open');
+        e.currentTarget.setAttribute('aria-expanded', nav.classList.contains('open'));
+      }
+    });
+  }
 
-// Filter opportunities by category from URL hash
-function filterByHash() {
-  const hash = (window.location.hash || '#home').toLowerCase();
-  const feedTitle = document.getElementById('feed-title');
-  const feedEyebrow = document.getElementById('feed-eyebrow');
+  // Footer Year
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Update Active Nav Link
-  document.querySelectorAll('.nav a').forEach(link => {
-    const href = (link.getAttribute('href') || '').toLowerCase();
-    if ((hash === '#home' && (href.endsWith('#home') || href === 'index.html')) || href.endsWith(hash)) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
-  });
+  // Newsletter Submission
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const msg = document.getElementById('newsletterMsg');
+      if (msg) msg.textContent = "✓ Thanks! You've joined CareerNJobs alert list.";
+      e.target.reset();
+    });
+  }
 
-  if (hash === '#courses' || hash === '#free-course') {
-    filtered = posts.filter(p => p.cat === 'Free Course' || (p.tags && p.tags.includes('Free Course')));
-    if (feedTitle) feedTitle.textContent = 'Free Certification Courses';
-    if (feedEyebrow) feedEyebrow.textContent = 'ONLINE LEARNING & BADGES';
-  } else if (hash === '#internships' || hash === '#internship') {
-    filtered = posts.filter(p => p.cat === 'Internships' || p.cat === 'Internship' || (p.tags && p.tags.includes('Internship')));
-    if (feedTitle) feedTitle.textContent = 'Latest Paid Internships';
-    if (feedEyebrow) feedEyebrow.textContent = 'STUDENT & FRESHER INTERNSHIPS';
-  } else if (hash === '#jobs' || hash === '#job') {
-    filtered = posts.filter(p => p.cat === 'Jobs' || p.cat === 'Private Job' || p.cat === 'Government Job' || (p.tags && p.tags.includes('Full Time')));
-    if (feedTitle) feedTitle.textContent = 'Fresh Recruitment & Job Openings';
-    if (feedEyebrow) feedEyebrow.textContent = 'GRADUATE & EXPERIENCED JOBS';
+  // Render Sidebar Trending
+  renderSidebarTrending();
+
+  // Determine Page Mode
+  const pathname = (window.location.pathname || '').toLowerCase();
+  if (pathname.includes('job-details') || document.getElementById('job-title')) {
+    initJobDetailsPage();
+  } else if (pathname.includes('jobs.html')) {
+    initDedicatedPage('job');
+  } else if (pathname.includes('courses.html')) {
+    initDedicatedPage('course');
+  } else if (pathname.includes('internships.html')) {
+    initDedicatedPage('intern');
   } else {
-    filtered = [...posts];
-    if (feedTitle) feedTitle.textContent = 'Latest Opportunities & Openings';
-    if (feedEyebrow) feedEyebrow.textContent = 'ALL RECENT UPDATES';
+    initHomepage();
   }
-  visible = 8;
-  render();
-}
-
-window.addEventListener('hashchange', filterByHash);
-if (window.location.hash) {
-  filterByHash();
-}
-
-// Auto-run details population & similar opportunities engine
-const cleanPath = (window.location.pathname || '').replace(/\\/g, '/');
-const currentFilename = cleanPath.substring(cleanPath.lastIndexOf('/') + 1) || 'index.html';
-
-let currentPost = null;
-
-if (currentFilename.toLowerCase().includes('job-details') || document.getElementById('job-title')) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const jobId = urlParams.get('id');
-  if (jobId) {
-    currentPost = posts.find(p => p.id === jobId);
-  }
-  // Fallback to top job if no ID provided
-  if (!currentPost && posts.length > 0) {
-    currentPost = posts[0];
-  }
-
-  if (currentPost) {
-    // Populate DOM
-    document.title = `${currentPost.title} — CareerNJobs`;
-    const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
-    
-    setText('page-title', `${currentPost.title} — CareerNJobs`);
-    setText('job-title', currentPost.title);
-    setText('job-cat', currentPost.cat);
-    setText('job-date', `Posted: ${currentPost.date}`);
-    setText('job-location', `Location: ${currentPost.location}`);
-    setText('job-skills', currentPost.skills && currentPost.skills.length > 0 ? currentPost.skills.join(', ') : 'N/A');
-    setText('job-experience', currentPost.experience || 'N/A');
-    setText('job-education', currentPost.education || 'N/A');
-    setText('job-location-meta', currentPost.location || 'N/A');
-    setText('job-desc', currentPost.job_description || currentPost.desc);
-    
-    if (currentPost.responsibilities) {
-      setText('job-responsibilities', currentPost.responsibilities);
-    } else {
-      const el = document.getElementById('section-roles');
-      if (el) el.style.display = 'none';
-    }
-    
-    if (currentPost.eligibility) {
-      setText('job-eligibility', currentPost.eligibility);
-    } else {
-      const el = document.getElementById('section-eligibility');
-      if (el) el.style.display = 'none';
-    }
-    
-    const bannerWrap = document.getElementById('job-banner-wrap');
-    const jobImg = document.getElementById('job-image');
-    if (currentPost.image && jobImg && bannerWrap) {
-      jobImg.src = currentPost.image;
-      jobImg.alt = currentPost.title;
-      bannerWrap.style.display = 'block';
-    } else if (bannerWrap) {
-      bannerWrap.style.display = 'none';
-    }
-
-    const topApply = document.getElementById('apply-btn-top');
-    const bottomApply = document.getElementById('apply-btn-bottom');
-    const applyUrl = currentPost.apply_url || '#';
-    if (topApply) topApply.href = applyUrl;
-    if (bottomApply) bottomApply.href = applyUrl;
-  }
-} else {
-  currentPost = posts.find(p => p.link && p.link.toLowerCase() === currentFilename.toLowerCase());
-}
-
-if (currentPost) {
-  renderSimilarOpportunities(currentPost);
-}
-
-render();
-
-
+});

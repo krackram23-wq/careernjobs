@@ -3,32 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Job & Course details, eligibility, skills, stipend, and official application link.">
+  <meta name="description" content="Detailed opportunity information, eligibility requirements, responsibilities, skills, stipend, and official application link.">
   <title id="page-title">Opportunity Details — CareerNJobs</title>
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5025710421115269"
      crossorigin="anonymous"></script>
 </head>
 <body>
+  <!-- Top Navigation Header -->
   <header class="site-header">
     <div class="topbar">
       <div class="container header-inner">
-        <a class="brand" href="index.html" aria-label="CareerNJobs home">
+        <a class="brand" href="index.html" aria-label="CareerNJobs Home">
           <span class="brand-mark">C</span>
           <span>Career<span>nJobs</span></span>
         </a>
-        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
         <nav class="nav" aria-label="Main navigation">
-          <a href="index.html#home" class="nav-link">HOME</a>
-          <a href="index.html#jobs" class="nav-link">JOBS</a>
-          <a href="index.html#courses" class="nav-link">FREE COURSE</a>
-          <a href="index.html#internships" class="nav-link">INTERNSHIPS</a>
+          <a href="index.html" class="nav-link">HOME</a>
+          <a href="jobs.html" class="nav-link">JOBS</a>
+          <a href="courses.html" class="nav-link">FREE COURSE</a>
+          <a href="internships.html" class="nav-link">INTERNSHIPS</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <!-- Top Header Leaderboard Ad -->
+  <!-- Top Leaderboard Ad Banner -->
   <div class="ad-leaderboard-wrap">
     <div class="ad-slot ad-slot-leaderboard">
       <span class="ad-label">ADVERTISEMENT</span>
@@ -44,109 +45,135 @@
     </div>
   </div>
 
+  <!-- Main Details Page Content -->
   <main class="container layout">
     <section class="content">
-      <a href="index.html" class="back-link">← Back to Opportunities</a>
       
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a> <span>›</span>
+        <a id="breadcrumb-cat-link" href="jobs.html"><span id="breadcrumb-cat">Jobs</span></a> <span>›</span>
+        <span id="breadcrumb-title">Details</span>
+      </div>
+
       <article class="job-detail">
-        <div class="job-banner-wrap" id="job-banner-wrap" style="display:none;">
-          <img id="job-image" class="job-banner-img" src="" alt="Company Hiring Banner">
+        
+        <!-- Featured Image Banner -->
+        <div id="job-banner-wrap" class="job-banner-wrap" style="display: none;">
+          <img id="job-image" class="job-banner-img" src="" alt="Recruitment Banner">
         </div>
 
         <header class="job-header">
-          <span class="tag" id="job-cat">Job</span>
-          <h1 class="job-title" id="job-title">Loading...</h1>
-          <div class="job-meta-row">
-            <span id="job-date"></span>
-            <span>·</span>
-            <span id="job-location"></span>
+          <div class="post-card-tags">
+            <span id="job-cat" class="tag tag-job">Jobs</span>
+            <span id="job-company-tag" class="tag company-tag">Company</span>
+            <span id="job-salary-tag" class="meta-badge">Full-time</span>
           </div>
-
-          <div class="apply-container header-apply">
-            <a href="#" target="_blank" rel="noopener" class="btn-apply-now" id="apply-btn-top">
-              APPLY NOW
+          <h1 id="job-title" class="job-title">Opportunity Title</h1>
+          
+          <div class="job-meta-row">
+            <span id="job-date">📅 Posted: Recently</span>
+            <span id="job-location">📍 Location: India</span>
+            <span id="job-type-badge">💼 Type: Full Time</span>
+          </div>
+          
+          <div>
+            <a id="apply-btn-top" href="#" target="_blank" rel="noopener noreferrer" class="btn-apply-now">
+              Apply For This Opportunity →
             </a>
           </div>
         </header>
 
-        <section class="job-meta-grid">
+        <!-- Key Information Meta Grid -->
+        <div class="job-meta-grid">
           <div class="meta-card">
-            <span class="meta-label">Must Have Skills</span>
-            <span class="meta-value accent-text" id="job-skills">N/A</span>
+            <span class="meta-label">Company / Provider</span>
+            <span id="job-company" class="meta-value accent-text">Company Name</span>
           </div>
           <div class="meta-card">
-            <span class="meta-label">Experience Required</span>
-            <span class="meta-value" id="job-experience">N/A</span>
+            <span class="meta-label">Role / Designation</span>
+            <span id="job-role" class="meta-value">Role Title</span>
           </div>
           <div class="meta-card">
-            <span class="meta-label">Qualification</span>
-            <span class="meta-value" id="job-education">N/A</span>
+            <span class="meta-label">Qualifications</span>
+            <span id="job-education" class="meta-value">Graduate / Degree</span>
           </div>
           <div class="meta-card">
-            <span class="meta-label">Job Location</span>
-            <span class="meta-value" id="job-location-meta">N/A</span>
+            <span class="meta-label">Experience Level</span>
+            <span id="job-experience" class="meta-value">Freshers / 0-2 Years</span>
           </div>
-        </section>
-
-        <!-- In-Content Native Ad 1: Below Meta Grid -->
-        <div class="ad-slot ad-slot-incontent">
-          <span class="ad-label">SPONSORED</span>
-          <ins class="adsbygoogle"
-               style="display:block; text-align:center;"
-               data-ad-layout="in-article"
-               data-ad-format="fluid"
-               data-ad-client="ca-pub-5025710421115269"
-               data-ad-slot=""></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
+          <div class="meta-card">
+            <span class="meta-label">Location / Mode</span>
+            <span id="job-location-meta" class="meta-value">Location</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Salary / Stipend</span>
+            <span id="job-salary" class="meta-value">Best in Industry</span>
+          </div>
         </div>
 
         <div class="job-body">
-          <section class="job-section">
-            <h2>Job Summary</h2>
-            <p id="job-desc"></p>
-          </section>
+          
+          <!-- Key Skills Section -->
+          <div class="job-section">
+            <h2>Key Skills & Technologies</h2>
+            <div id="job-skills-pills" class="similar-tags"></div>
+          </div>
 
-          <section class="job-section" id="section-roles">
-            <h2>Roles & Responsibilities</h2>
-            <p id="job-responsibilities"></p>
-          </section>
+          <!-- Description Section -->
+          <div class="job-section">
+            <h2>About The Opportunity</h2>
+            <p id="job-desc">Detailed opportunity summary will be displayed here.</p>
+          </div>
 
-          <section class="job-section" id="section-eligibility">
-            <h2>Eligibility</h2>
-            <p id="job-eligibility"></p>
-          </section>
-
-          <!-- In-Content Native Ad 2: Before Apply Button -->
+          <!-- In-Content Native Ad -->
           <div class="ad-slot ad-slot-incontent">
-            <span class="ad-label">SPONSORED ADVERTISEMENT</span>
+            <span class="ad-label">ADVERTISEMENT</span>
             <ins class="adsbygoogle"
-                 style="display:block"
+                 style="display:block; text-align:center;"
+                 data-ad-layout="in-article"
+                 data-ad-format="fluid"
                  data-ad-client="ca-pub-5025710421115269"
-                 data-ad-slot=""
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
+                 data-ad-slot=""></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
           </div>
 
-          <div class="apply-container footer-apply">
-            <a href="#" target="_blank" rel="noopener" class="btn-apply-now big-apply" id="apply-btn-bottom">
-              APPLY NOW
-            </a>
-            <p class="apply-note">Clicking "Apply Now" will redirect you to the official job recruitment page.</p>
+          <!-- Responsibilities Section -->
+          <div id="section-roles" class="job-section">
+            <h2>Roles & Key Responsibilities</h2>
+            <p id="job-responsibilities">Key daily responsibilities and deliverables.</p>
           </div>
+
+          <!-- Eligibility Section -->
+          <div id="section-eligibility" class="job-section">
+            <h2>Eligibility Criteria & Requirements</h2>
+            <p id="job-eligibility">Education and skill eligibility requirements.</p>
+          </div>
+
+          <!-- Bottom Apply Call To Action -->
+          <div class="footer-apply">
+            <h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 900; color: #0f172a;">Ready to Take the Next Step?</h3>
+            <p style="margin: 0 0 16px; font-size: 13.5px; color: #64748b;">Submit your application through the official recruitment or course registration page.</p>
+            <a id="apply-btn-bottom" href="#" target="_blank" rel="noopener noreferrer" class="btn-apply-now big-apply">
+              Visit Official Application Page →
+            </a>
+            <p class="apply-note">Note: Clicking "Apply" will securely redirect you to the official provider portal.</p>
+          </div>
+
         </div>
       </article>
-      
-      <!-- Similar Opportunities container -->
+
+      <!-- Similar / Related Opportunities Section -->
       <div id="similar-opportunities"></div>
+
     </section>
 
+    <!-- Sidebar Area -->
     <aside class="sidebar">
-      <!-- Social Join Community Alert (CourseJoiner style) -->
+      
+      <!-- Social Join Alert -->
       <div class="side-card social-join-card">
         <span class="eyebrow">JOIN COMMUNITY</span>
         <h3>Get Instant Job Alerts</h3>
@@ -174,16 +201,12 @@
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      
-      <div class="side-card newsletter">
-        <span class="eyebrow">FREE UPDATES</span>
-        <h3>Newsletter Alerts</h3>
-        <p>Subscribe for weekly curated courses and job listings delivered to your inbox.</p>
-        <form id="newsletterForm">
-          <input type="email" id="email" placeholder="Your email address" required>
-          <button class="btn primary" type="submit">Subscribe</button>
-        </form>
-        <small id="newsletterMsg"></small>
+
+      <!-- Trending Opportunities -->
+      <div class="side-card">
+        <span class="eyebrow">TRENDING NOW</span>
+        <h3>Popular Opportunities</h3>
+        <div id="sidebar-trending" class="trending-list"></div>
       </div>
 
       <!-- Sticky Sidebar Ad -->
@@ -199,26 +222,31 @@
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
+
     </aside>
   </main>
 
+  <!-- Footer -->
   <footer>
     <div class="container footer-grid">
       <div>
-        <a class="brand footer-brand" href="index.html"><span class="brand-mark">C</span><span>Career<span>nJobs</span></span></a>
-        <p>Helping students and freshers discover learning, certifications, internships, and career opportunities.</p>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark">C</span>
+          <span>Career<span>nJobs</span></span>
+        </a>
+        <p>CareerNJobs empowers students, freshers, and professionals with verified jobs, free certifications, and high-stipend internships.</p>
       </div>
       <div>
-        <h4>Explore</h4>
-        <a href="index.html#home">Home</a>
-        <a href="index.html#jobs">Jobs</a>
-        <a href="index.html#courses">Free Course</a>
-        <a href="index.html#internships">Internships</a>
+        <h4>Explore Portals</h4>
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs Portal</a>
+        <a href="courses.html">Free Courses</a>
+        <a href="internships.html">Internships</a>
       </div>
       <div>
         <h4>Information</h4>
         <a href="#">About Us</a>
-        <a href="#">Contact</a>
+        <a href="#">Contact Us</a>
         <a href="#">Privacy Policy</a>
         <a href="#">Disclaimer</a>
       </div>
@@ -226,7 +254,7 @@
     <div class="copyright">© <span id="year"></span> CareerNJobs. All rights reserved.</div>
   </footer>
 
-  <script src="data.js?v=10"></script>
-  <script src="script.js?v=10"></script>
+  <script src="data.js?v=11"></script>
+  <script src="script.js?v=11"></script>
 </body>
 </html>
