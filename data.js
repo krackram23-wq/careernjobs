@@ -1,8 +1,8 @@
 const sqlJobs = [
   {
     "id": "JOB-ACC-01",
-    "cat": "Private Job",
-    "title": "Procure to Pay Operations Associate at Accenture",
+    "cat": "Jobs",
+    "title": "Accenture Hiring 2026: Procure to Pay Operations Associate | Apply Online",
     "date": "Aug 17, 2026",
     "desc": "Accenture is hiring Procure to Pay Operations Associate in Hyderabad. Qualifications: BCom / MCom / MBA. Experience: 0-2 years (1-3 years). Job No. AIOC-S01645614. Manage invoices, PO & Non PO, vendor payments, and accounts payable.",
     "link": "job-details.html?id=JOB-ACC-01",
@@ -12,8 +12,7 @@ const sqlJobs = [
       "Invoice Processing",
       "PO & Non PO",
       "Vendor Payment",
-      "Master Data Management",
-      "Vendor Management"
+      "Master Data Management"
     ],
     "tags": [
       "Accenture",
@@ -29,11 +28,184 @@ const sqlJobs = [
     "job_type": "Full-time",
     "company": "Accenture",
     "image": "images/accenture-hiring.jpg",
-    "job_description": "Accenture is a global professional services company with leading capabilities in digital, cloud and security. You will be aligned with our Finance Operations vertical and will be helping us in determining financial outcomes by collecting operational data/reports, whilst conducting analysis and reconciling transactions. Procure to Pay is the process of managing the entire purchasing cycle from ordering goods and services to making the final payment. It includes steps like requisitioning, purchasing, receiving, invoicing, and payment processing. The goal is to ensure efficient and accurate procurement and payment activities. Keywords include: Invoice Processing, PO & Non PO, Vendor Payment, Master Data Management, Vendor Management, Accounts Payable.",
-    "responsibilities": "• In this role you are required to solve routine problems, largely through precedent and referral to general guidelines.\n• Your expected interactions are within your own team and direct supervisor.\n• You will be provided detailed to moderate level of instruction on daily work tasks and detailed instruction on new assignments.\n• The decisions that you make would impact your own work.\n• You will be an individual contributor as a part of a team, with a predetermined, focused scope of work.\n• Design, implement, manage and support accounts payable activities for an organization by applying the relevant processes, policies and applications.\n• Please note that this role may require you to work in rotational shifts.",
-    "eligibility": "• Qualifications: BCom / MCom / Master of Business Administration (MBA)\n• Years of Experience: 0-2 years / 1 to 3 years\n• Skill required: Procure to Pay - Accounts Payable Processing\n• Key skills: Invoice Processing, PO & Non PO, Vendor Payment, Master Data Management, Vendor Management, Accounts Payable",
+    "job_description": "Accenture is a global professional services company with leading capabilities in digital, cloud and security. You will be aligned with our Finance Operations vertical and will be helping us in determining financial outcomes by collecting operational data/reports, whilst conducting analysis and reconciling transactions. Procure to Pay is the process of managing the entire purchasing cycle from ordering goods and services to making the final payment.",
+    "responsibilities": "• Solve routine problems through precedent and referral to general guidelines.\n• Interactions within your own team and direct supervisor.\n• Work on accounts payable, invoice processing, and vendor management.\n• Work in rotational shifts as required.",
+    "eligibility": "• Qualifications: BCom / MCom / Master of Business Administration (MBA)\n• Years of Experience: 0-2 years / 1 to 3 years\n• Skill required: Procure to Pay - Accounts Payable Processing",
     "apply_url": "https://mycareer.accenture.com/?source=acn_5&JRID=AIOC-S01645614",
     "salary": "Competitive / Best in Industry",
     "work_mode": "Hyderabad (Rotational Shifts)"
+  },
+  {
+    "id": "JOB-AMZ-01",
+    "cat": "Jobs",
+    "title": "Amazon Recruitment 2026: Investigation Associate Vacancy, Eligibility & Apply Online",
+    "date": "Aug 16, 2026",
+    "desc": "Amazon is hiring Investigation Associates for risk operations and transactional review. Freshers and experienced graduates from any stream can apply online.",
+    "link": "job-details.html?id=JOB-AMZ-01",
+    "skills": [
+      "Analytical Skills",
+      "Problem Solving",
+      "Communication",
+      "MS Excel",
+      "Investigation"
+    ],
+    "tags": [
+      "Amazon",
+      "Bangalore / Hyderabad",
+      "Full Time",
+      "Graduate"
+    ],
+    "role": "Investigation Associate",
+    "location": "Bangalore / Hyderabad",
+    "education": "Bachelor's Degree in any discipline",
+    "experience": "0-1 years / Freshers",
+    "job_type": "Full-time",
+    "company": "Amazon",
+    "image": "images/accenture-hiring.jpg",
+    "job_description": "Amazon is seeking dedicated Investigation Associates to protect our customer experience by identifying and preventing fraudulent activities and investigating complex transaction patterns.",
+    "responsibilities": "• Review suspicious transactions and evaluate risk patterns.\n• Maintain strict accuracy and SLA standards for customer orders.\n• Communicate effectively with cross-functional support teams.",
+    "eligibility": "• Any graduate degree (BA, BCom, BSc, BTech, BBA).\n• Strong written and verbal communication in English.\n• Good analytical and computer skills.",
+    "apply_url": "https://amazon.jobs",
+    "salary": "₹3.5 - ₹4.5 LPA + Benefits",
+    "work_mode": "Hybrid / Office"
+  },
+  {
+    "id": "CRS-GOOG-01",
+    "cat": "Free Course",
+    "title": "Google FREE AI Certification Course 2026: Learn Generative AI & Prompt Engineering",
+    "date": "Aug 15, 2026",
+    "desc": "Enroll in Google's official free AI certification course. Master Generative AI fundamentals, large language models (LLMs), and prompt engineering with a verified badge.",
+    "link": "job-details.html?id=CRS-GOOG-01",
+    "skills": [
+      "Generative AI",
+      "Prompt Engineering",
+      "Machine Learning",
+      "LLMs",
+      "Python"
+    ],
+    "tags": [
+      "Google",
+      "Free Course",
+      "Certificate",
+      "AI & ML",
+      "Online"
+    ],
+    "role": "Student / Professional",
+    "location": "Online / 100% Free",
+    "education": "Open to all students & working professionals",
+    "experience": "No prior experience required (Beginner to Advanced)",
+    "job_type": "Self-Paced Online Course",
+    "company": "Google Cloud",
+    "image": "images/accenture-hiring.jpg",
+    "job_description": "Learn artificial intelligence directly from Google Cloud experts. This comprehensive course covers foundational AI concepts, transformer architectures, responsible AI practices, and real-world prompt engineering workflows.",
+    "responsibilities": "• Complete self-paced modules and hands-on lab exercises.\n• Build prompt engineering solutions for real-world tasks.\n• Pass the final assessment to earn your official Google completion badge.",
+    "eligibility": "• Anyone with an interest in technology and AI.\n• No coding prerequisite for foundational modules.",
+    "apply_url": "https://cloud.google.com/training/free",
+    "salary": "Free with Official Certificate",
+    "work_mode": "Online (Self-Paced)"
+  },
+  {
+    "id": "CRS-ISRO-01",
+    "cat": "Free Course",
+    "title": "ISRO Free Online Course 2026: Learn Remote Sensing, GIS & AI – Free Certificate",
+    "date": "Aug 14, 2026",
+    "desc": "Indian Space Research Organisation (ISRO / IIRS) invites applications for its free online certificate course on Remote Sensing, Geoinformatics, and Satellite Technology.",
+    "link": "job-details.html?id=CRS-ISRO-01",
+    "skills": [
+      "Remote Sensing",
+      "GIS",
+      "Satellite Data",
+      "Spatial Analytics",
+      "Python"
+    ],
+    "tags": [
+      "ISRO",
+      "Govt Certificate",
+      "Free Course",
+      "Students",
+      "Online"
+    ],
+    "role": "Learner / Researcher",
+    "location": "Online (IIRS-ISRO Portal)",
+    "education": "Undergraduate / Postgraduate students and faculty",
+    "experience": "Beginner Friendly",
+    "job_type": "Live Interactive Online Program",
+    "company": "ISRO (IIRS Dehradun)",
+    "image": "images/accenture-hiring.jpg",
+    "job_description": "ISRO Educational outreach program designed to empower students and professionals with satellite imagery processing, remote sensing technology, and geographical information systems.",
+    "responsibilities": "• Attend live online lecture sessions by ISRO scientists.\n• Complete practical data analysis assignments.\n• Receive government recognized ISRO participation certificate upon completion.",
+    "eligibility": "• Undergraduate and postgraduate students from any recognized university.\n• Working professionals and teachers.",
+    "apply_url": "https://elearning.iirs.gov.in",
+    "salary": "Free Government Certification",
+    "work_mode": "Online"
+  },
+  {
+    "id": "INT-TITAN-01",
+    "cat": "Internships",
+    "title": "Titan Company Internship 2026: ₹50,000 Monthly Stipend — Apply Online",
+    "date": "Aug 15, 2026",
+    "desc": "Titan Company Limited (A Tata Enterprise) is offering exciting paid internships for engineering, design, and management students with a high stipend of ₹50,000 per month.",
+    "link": "job-details.html?id=INT-TITAN-01",
+    "skills": [
+      "Product Strategy",
+      "Business Analytics",
+      "Design Thinking",
+      "Operations",
+      "Problem Solving"
+    ],
+    "tags": [
+      "Tata Group",
+      "Titan",
+      "High Stipend",
+      "Bangalore",
+      "Internship"
+    ],
+    "role": "Management / Engineering Intern",
+    "location": "Bangalore, India",
+    "education": "B.Tech / BE / MBA / NID / NIFT students",
+    "experience": "Students / Freshers",
+    "job_type": "Internship (2 to 6 Months)",
+    "company": "Titan Company (Tata Enterprise)",
+    "image": "images/accenture-hiring.jpg",
+    "job_description": "Titan Internship Program offers direct exposure to retail, luxury brands, supply chain, software engineering, and omnichannel consumer product development with mentorship from Tata leadership.",
+    "responsibilities": "• Work on live business projects and present strategic recommendations.\n• Collaborate with product managers, marketing, and engineering teams.\n• Analyze market trends and consumer data.",
+    "eligibility": "• Pre-final or final year undergraduate and postgraduate students.\n• Strong academic record and proactive leadership mindset.",
+    "apply_url": "https://www.titancompany.in/careers",
+    "salary": "₹50,000 / month Stipend",
+    "work_mode": "Hybrid / On-site"
+  },
+  {
+    "id": "INT-JD-01",
+    "cat": "Internships",
+    "title": "Justdial Internship 2026: ₹20,000 Monthly Stipend; Check Eligibility & Apply",
+    "date": "Aug 14, 2026",
+    "desc": "Justdial is hiring interns across Technology, Operations, and Business Development. Earn ₹20,000 monthly stipend with certificate and PPO opportunity.",
+    "link": "job-details.html?id=INT-JD-01",
+    "skills": [
+      "Communication",
+      "Market Research",
+      "Data Analysis",
+      "Digital Marketing",
+      "Coordination"
+    ],
+    "tags": [
+      "Justdial",
+      "Paid Internship",
+      "Noida / Mumbai",
+      "College Students"
+    ],
+    "role": "Business Operations Intern",
+    "location": "Noida / Mumbai / Remote",
+    "education": "Any Graduate / Undergrad Student",
+    "experience": "Freshers / College Students",
+    "job_type": "Internship (3 Months)",
+    "company": "Justdial (Reliance Group)",
+    "image": "images/accenture-hiring.jpg",
+    "job_description": "Gain hands-on corporate experience with India's leading local search engine. Interns participate in business expansion, customer operations, and digital marketing initiatives.",
+    "responsibilities": "• Assist in operational data management and merchant onboarding.\n• Coordinate client queries and provide resolution support.\n• Prepare analytical performance reports.",
+    "eligibility": "• College students from 1st to final year or recent graduates.\n• Eager to learn with good problem-solving aptitude.",
+    "apply_url": "https://www.justdial.com/careers",
+    "salary": "₹20,000 / month Stipend + Certificate",
+    "work_mode": "Hybrid"
   }
 ];

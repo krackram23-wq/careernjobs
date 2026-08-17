@@ -185,19 +185,36 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // Filter opportunities by category from URL hash
 function filterByHash() {
-  const hash = window.location.hash.toLowerCase();
-  if (hash === '#courses') {
-    filtered = posts.filter(p => p.cat === 'Free Course');
-  } else if (hash === '#internships') {
-    filtered = posts.filter(p => p.cat === 'Internship');
-  } else if (hash === '#jobs') {
-    filtered = posts.filter(p => p.cat === 'Private Job');
-  } else if (hash === '#govt') {
-    filtered = posts.filter(p => p.cat === 'Government Job');
-  } else if (hash === '#scholarships') {
-    filtered = posts.filter(p => p.cat === 'Scholarship');
+  const hash = (window.location.hash || '#home').toLowerCase();
+  const feedTitle = document.getElementById('feed-title');
+  const feedEyebrow = document.getElementById('feed-eyebrow');
+
+  // Update Active Nav Link
+  document.querySelectorAll('.nav a').forEach(link => {
+    const href = (link.getAttribute('href') || '').toLowerCase();
+    if ((hash === '#home' && (href.endsWith('#home') || href === 'index.html')) || href.endsWith(hash)) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+
+  if (hash === '#courses' || hash === '#free-course') {
+    filtered = posts.filter(p => p.cat === 'Free Course' || (p.tags && p.tags.includes('Free Course')));
+    if (feedTitle) feedTitle.textContent = 'Free Certification Courses';
+    if (feedEyebrow) feedEyebrow.textContent = 'ONLINE LEARNING & BADGES';
+  } else if (hash === '#internships' || hash === '#internship') {
+    filtered = posts.filter(p => p.cat === 'Internships' || p.cat === 'Internship' || (p.tags && p.tags.includes('Internship')));
+    if (feedTitle) feedTitle.textContent = 'Latest Paid Internships';
+    if (feedEyebrow) feedEyebrow.textContent = 'STUDENT & FRESHER INTERNSHIPS';
+  } else if (hash === '#jobs' || hash === '#job') {
+    filtered = posts.filter(p => p.cat === 'Jobs' || p.cat === 'Private Job' || p.cat === 'Government Job' || (p.tags && p.tags.includes('Full Time')));
+    if (feedTitle) feedTitle.textContent = 'Fresh Recruitment & Job Openings';
+    if (feedEyebrow) feedEyebrow.textContent = 'GRADUATE & EXPERIENCED JOBS';
   } else {
     filtered = [...posts];
+    if (feedTitle) feedTitle.textContent = 'Latest Opportunities & Openings';
+    if (feedEyebrow) feedEyebrow.textContent = 'ALL RECENT UPDATES';
   }
   visible = 8;
   render();
@@ -227,10 +244,10 @@ if (currentFilename.toLowerCase().includes('job-details') || document.getElement
 
   if (currentPost) {
     // Populate DOM
-    document.title = `${currentPost.title} — CareerNJob`;
+    document.title = `${currentPost.title} — CourseJoiner`;
     const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
     
-    setText('page-title', `${currentPost.title} — CareerNJob`);
+    setText('page-title', `${currentPost.title} — CourseJoiner`);
     setText('job-title', currentPost.title);
     setText('job-cat', currentPost.cat);
     setText('job-date', `Posted: ${currentPost.date}`);
@@ -280,4 +297,5 @@ if (currentPost) {
 }
 
 render();
+
 

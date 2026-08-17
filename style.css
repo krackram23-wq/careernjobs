@@ -98,13 +98,21 @@ a{text-decoration:none;color:inherit}
 .nav a {
   color: var(--muted);
   transition: all 0.2s ease;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 8px;
+  letter-spacing: 0.5px;
+  position: relative;
 }
 
 .nav a:hover {
   color: var(--primary);
   background: var(--primary-light);
+}
+
+.nav a.active {
+  color: var(--primary);
+  background: var(--primary-light);
+  font-weight: 800;
 }
 
 .menu-toggle {
@@ -583,6 +591,61 @@ h2 {
   font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.3px;
+}
+
+/* Social Channel Alert Buttons */
+.social-join-card {
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+  border: 1px solid #bfdbfe;
+}
+
+.social-join-card p {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.social-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-channel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.telegram-btn {
+  background: #229ED9;
+  color: #ffffff;
+}
+
+.telegram-btn:hover {
+  background: #1b86b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 158, 217, 0.35);
+}
+
+.whatsapp-btn {
+  background: #25D366;
+  color: #ffffff;
+}
+
+.whatsapp-btn:hover {
+  background: #1eb857;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
 }
 
 .popular-item {
