@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Job details, eligibility, skills, and application link.">
+  <title id="page-title">Job Details — CareerNJob</title>
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="CareerNJob home">
+          <span class="brand-mark">C</span>
+          <span>Career<span>nJob</span></span>
+        </a>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#courses">Free Courses</a>
+          <a href="index.html#internships">Internships</a>
+          <a href="index.html#jobs">Private Jobs</a>
+          <a href="index.html#govt">Govt Jobs</a>
+          <a href="index.html#scholarships">Scholarships</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="content">
+      <a href="index.html" class="back-link">← Back to Opportunities</a>
+      
+      <article class="job-detail">
+        <header class="job-header">
+          <span class="tag" id="job-cat">Job</span>
+          <h1 class="job-title" id="job-title">Loading...</h1>
+          <div class="job-meta-row">
+            <span id="job-date"></span>
+            <span>·</span>
+            <span id="job-location"></span>
+          </div>
+
+          <div class="apply-container header-apply">
+            <a href="#" target="_blank" rel="noopener" class="btn-apply-now" id="apply-btn-top">
+              APPLY NOW
+            </a>
+          </div>
+        </header>
+
+        <section class="job-meta-grid">
+          <div class="meta-card">
+            <span class="meta-label">Must Have Skills</span>
+            <span class="meta-value accent-text" id="job-skills">N/A</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Experience Required</span>
+            <span class="meta-value" id="job-experience">N/A</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Qualification</span>
+            <span class="meta-value" id="job-education">N/A</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Job Location</span>
+            <span class="meta-value" id="job-location-meta">N/A</span>
+          </div>
+        </section>
+
+        <div class="job-body">
+          <section class="job-section">
+            <h2>Job Summary</h2>
+            <p id="job-desc"></p>
+          </section>
+
+          <section class="job-section" id="section-roles">
+            <h2>Roles & Responsibilities</h2>
+            <p id="job-responsibilities"></p>
+          </section>
+
+          <section class="job-section" id="section-eligibility">
+            <h2>Eligibility</h2>
+            <p id="job-eligibility"></p>
+          </section>
+
+          <div class="apply-container footer-apply">
+            <a href="#" target="_blank" rel="noopener" class="btn-apply-now big-apply" id="apply-btn-bottom">
+              APPLY NOW
+            </a>
+            <p class="apply-note">Clicking "Apply Now" will redirect you to the official job recruitment page.</p>
+          </div>
+        </div>
+      </article>
+      
+      <!-- Similar Opportunities container -->
+      <div id="similar-opportunities"></div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="ad-box">ADVERTISEMENT</div>
+      
+      <div class="side-card newsletter">
+        <span class="eyebrow">FREE UPDATES</span>
+        <h3>Get new opportunities</h3>
+        <p>Join our newsletter for useful courses, internships and job alerts.</p>
+        <form id="newsletterForm">
+          <input type="email" id="email" placeholder="Your email address" required>
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+        <small id="newsletterMsg"></small>
+      </div>
+
+      <div class="ad-box tall">ADVERTISEMENT</div>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark">C</span><span>Career<span>nJob</span></span></a>
+        <p>Helping students and freshers discover learning and career opportunities.</p>
+      </div>
+      <div>
+        <h4>Categories</h4>
+        <a href="index.html#courses">Free Courses</a>
+        <a href="index.html#internships">Internships</a>
+        <a href="index.html#jobs">Private Jobs</a>
+        <a href="index.html#govt">Government Jobs</a>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+    <div class="copyright">© <span id="year"></span> CareerNJob. All rights reserved.</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
